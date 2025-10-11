@@ -94,15 +94,15 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
 
   return (
     <div className="flex-1 flex flex-col bg-white">
-      <div className="border-b border-gray-200 p-4">
+      <div className="border-b border-gray-200 p-3 sm:p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3 flex-1">
             {isMobile && (
               <button
                 onClick={onToggleSidebar}
-                className="md:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+                className="md:hidden p-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-6 h-6" />
               </button>
             )}
             <input
@@ -110,26 +110,26 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
               value={title}
               onChange={(e) => handleChange('title', e.target.value)}
               placeholder="Note title..."
-              className="text-xl md:text-2xl font-semibold text-gray-900 bg-transparent border-none outline-none flex-1"
+              className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 bg-transparent border-none outline-none flex-1"
             />
           </div>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => exportToText(note)}
-              className="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              className="flex items-center space-x-2 p-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-5 h-5" />
             </button>
             <button
               onClick={handleSave}
               disabled={!isModified}
-              className={`flex items-center space-x-2 px-2 md:px-4 py-2 rounded-lg transition-colors ${
+              className={`flex items-center space-x-2 px-3 md:px-4 py-2.5 rounded-lg transition-colors ${
                 isModified
                   ? 'bg-blue-600 text-white hover:bg-blue-700'
                   : 'bg-gray-100 text-gray-400 cursor-not-allowed'
               }`}
             >
-              <Save className="w-4 h-4" />
+              <Save className="w-5 h-5" />
               <span className="hidden sm:inline">Save</span>
             </button>
           </div>
@@ -137,8 +137,8 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
         
         <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-500">
           <div className="flex items-center space-x-2">
-            <Calendar className="w-4 h-4" />
-            <span className="text-xs sm:text-sm">
+            <Calendar className="w-4 h-4 flex-shrink-0" />
+            <span className="text-sm">
               {new Date(note.updated_at).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'short',
@@ -150,11 +150,11 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
           </div>
           
           <div className="flex items-center space-x-2">
-            <Folder className="w-4 h-4" />
+            <Folder className="w-4 h-4 flex-shrink-0" />
             <select
               value={category}
               onChange={(e) => handleChange('category', e.target.value)}
-              className="bg-transparent border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="bg-transparent border border-gray-300 rounded px-2 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               {categories.map(cat => (
                 <option key={cat.value} value={cat.value}>
@@ -177,24 +177,24 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
         </div>
       </div>
       
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-3 sm:p-4">
         <textarea
           value={content}
           onChange={(e) => handleChange('content', e.target.value)}
           placeholder="Start writing your note..."
-          className="w-full h-full resize-none border-none outline-none text-gray-900 leading-relaxed text-sm md:text-base"
+          className="w-full h-full resize-none border-none outline-none text-gray-900 leading-relaxed text-base"
         />
       </div>
       
-      <div className="border-t border-gray-200 px-4 py-2 bg-gray-50">
+      <div className="border-t border-gray-200 px-3 sm:px-4 py-2 bg-gray-50">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-1 sm:space-y-0">
-          <div className="flex items-center space-x-4 text-xs sm:text-sm text-gray-500">
+          <div className="flex items-center space-x-4 text-sm text-gray-500">
             <span>{getWordCount(content)} words</span>
             <span>{getCharCount(content)} characters</span>
           </div>
           {isModified && (
-            <p className="text-xs sm:text-sm text-yellow-600">
-              Unsaved • Ctrl+S to save
+            <p className="text-sm text-yellow-600">
+              Unsaved • <span className="hidden sm:inline">Ctrl+S to save</span><span className="sm:hidden">Tap Save</span>
             </p>
           )}
         </div>
