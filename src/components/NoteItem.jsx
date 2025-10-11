@@ -33,7 +33,7 @@ const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin }) => {
             <h4 className="font-medium text-sm sm:text-base text-gray-900 truncate">
               {note.title || 'Untitled Note'}
             </h4>
-            {note.isPinned && (
+            {note.is_pinned && (
               <Pin className="w-3 h-3 text-blue-600 flex-shrink-0" />
             )}
           </div>
@@ -44,7 +44,7 @@ const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin }) => {
           
           <div className="flex items-center justify-between">
             <span className="text-xs text-gray-400">
-              {formatDate(note.updatedAt)}
+              {formatDate(note.updated_at)}
             </span>
             <span className="text-xs text-blue-600 bg-blue-100 px-1 sm:px-2 py-1 rounded">
               {note.category}
@@ -59,7 +59,7 @@ const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin }) => {
               onTogglePin();
             }}
             className={`p-2 sm:p-1 rounded hover:bg-gray-200 ${
-              note.isPinned ? 'text-blue-600' : 'text-gray-400'
+              note.is_pinned ? 'text-blue-600' : 'text-gray-400'
             }`}
           >
             <Pin className="w-4 h-4 sm:w-3 sm:h-3" />

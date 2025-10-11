@@ -139,7 +139,7 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
           <div className="flex items-center space-x-2">
             <Calendar className="w-4 h-4" />
             <span className="text-xs sm:text-sm">
-              {new Date(note.updatedAt).toLocaleDateString('en-US', {
+              {new Date(note.updated_at).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric',
@@ -164,7 +164,7 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
             </select>
           </div>
           
-          <div className="flex items-center space-x-2 flex-1">
+          {/* <div className="flex items-center space-x-2 flex-1">
             <Tag className="w-4 h-4" />
             <input
               type="text"
@@ -173,7 +173,7 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
               placeholder="Add tags"
               className="bg-transparent border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent flex-1 min-w-0"
             />
-          </div>
+          </div> */}
         </div>
       </div>
       

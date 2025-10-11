@@ -5,10 +5,10 @@ import NoteEditor from './components/NoteEditor';
 import SearchBar from './components/SearchBar';
 import EmptyState from './components/EmptyState';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
-import { useLocalStorage } from './hooks/useLocalStorage';
+import { useSupabaseNotes } from './hooks/useSupabaseNotes';
 
 function App() {
-  const [notes, setNotes] = useLocalStorage('notes', []);
+  const { notes, loading, createNote: createNoteDB, updateNote: updateNoteDB, deleteNote: deleteNoteDB } = useSupabaseNotes();
   const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -24,40 +24,57 @@ function App() {
     return matchesSearch && matchesCategory;
   });
 
-  const createNote = () => {
+  const sortedNotes = [...filteredNotes].sort((a, b) => {
+    if (a.is_pinned && !b.is_pinned) return -1;
+    if (!a.is_pinned && b.is_pinned) return 1;
+    return new Date(b.updated_at) - new Date(a.updated_at);
+  });
+
+  const createNote = async () => {
     const newNote = {
-      id: Date.now().toString(),
       title: 'Untitled Note',
       content: '',
       category: 'general',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      isPinned: false,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      is_pinned: false,
       tags: []
     };
-    setNotes([newNote, ...notes]);
-    setSelectedNoteId(newNote.id);
-  };
-
-  const updateNote = (updatedNote) => {
-    setNotes(notes.map(note => 
-      note.id === updatedNote.id 
-        ? { ...updatedNote, updatedAt: new Date().toISOString() }
-        : note
-    ));
-  };
-
-  const deleteNote = (noteId) => {
-    setNotes(notes.filter(note => note.id !== noteId));
-    if (selectedNoteId === noteId) {
-      setSelectedNoteId(null);
+    try {
+      const createdNote = await createNoteDB(newNote);
+      setSelectedNoteId(createdNote.id);
+    } catch (error) {
+      console.error('Failed to create note:', error);
     }
   };
 
-  const togglePin = (noteId) => {
-    setNotes(notes.map(note =>
-      note.id === noteId ? { ...note, isPinned: !note.isPinned } : note
-    ));
+  const updateNote = async (updatedNote) => {
+    try {
+      await updateNoteDB({
+        ...updatedNote,
+        updated_at: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Failed to update note:', error);
+    }
+  };
+
+  const deleteNote = async (noteId) => {
+    try {
+      await deleteNoteDB(noteId);
+      if (selectedNoteId === noteId) {
+        setSelectedNoteId(null);
+      }
+    } catch (error) {
+      console.error('Failed to delete note:', error);
+    }
+  };
+
+  const togglePin = async (noteId) => {
+    const note = notes.find(n => n.id === noteId);
+    if (note) {
+      await updateNote({ ...note, is_pinned: !note.is_pinned });
+    }
   };
 
   const importNotes = (importedNotes) => {
@@ -132,7 +149,7 @@ function App() {
             onCategoryChange={setSelectedCategory}
           />
           <Sidebar
-            notes={filteredNotes}
+            notes={sortedNotes}
             selectedNoteId={selectedNoteId}
             onSelectNote={(id) => {
               setSelectedNoteId(id);
@@ -145,7 +162,11 @@ function App() {
         
         {/* Main Content */}
         <div className="flex-1 flex flex-col">
-          {notes.length === 0 ? (
+          {loading ? (
+            <div className="flex-1 flex items-center justify-center">
+              <div className="text-gray-500">Loading notes...</div>
+            </div>
+          ) : notes.length === 0 ? (
             <EmptyState onCreateNote={createNote} />
           ) : (
             <NoteEditor
