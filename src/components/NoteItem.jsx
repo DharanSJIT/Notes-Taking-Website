@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Pin, Trash2, MoreVertical } from 'lucide-react';
+import ConfirmDialog from './ConfirmDialog';
 
 const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin }) => {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
@@ -65,9 +67,7 @@ const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin }) => {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              if (window.confirm(`Are you sure you want to delete "${note.title || 'Untitled Note'}"?`)) {
-                onDelete();
-              }
+              setShowDeleteDialog(true);
             }}
             className="p-2 sm:p-1 rounded hover:bg-red-100 text-gray-400 hover:text-red-600"
           >
@@ -75,6 +75,17 @@ const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin }) => {
           </button>
         </div>
       </div>
+      
+      <ConfirmDialog
+        isOpen={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        onConfirm={() => {
+          onDelete();
+          setShowDeleteDialog(false);
+        }}
+        title="Delete Note"
+        message={`Are you sure you want to delete "${note.title || 'Untitled Note'}"? This action cannot be undone.`}
+      />
     </div>
   );
 };
