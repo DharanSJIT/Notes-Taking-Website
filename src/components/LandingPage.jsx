@@ -110,46 +110,6 @@ export default function LandingPage({ onGetStarted }) {
         </div>
       </section>
 
-      {/* Social Proof Section */}
-      {/* <section className="bg-slate-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">
-              Loved by Creative Minds
-            </h2>
-            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              Join thousands of writers, thinkers, and creators who trust NotesApp
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { name: "Sarah Chen", role: "Product Designer", quote: "NotesApp transformed how I capture inspiration. It feels like it was made just for me." },
-              { name: "Marcus Johnson", role: "Startup Founder", quote: "Finally, a note-taking app that gets out of my way and lets me focus on ideas." },
-              { name: "Elena Rodriguez", role: "Writer", quote: "The perfect balance of simplicity and power. My thoughts have never been more organized." }
-            ].map((testimonial, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
-                <div className="flex items-center gap-2 mb-4">
-                  {[1,2,3,4,5].map(star => (
-                    <Star key={star} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <p className="text-slate-600 italic mb-6 leading-relaxed">"{testimonial.quote}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
-                    {testimonial.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900">{testimonial.name}</div>
-                    <div className="text-sm text-slate-500">{testimonial.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
       {/* Benefits Section */}
       <section className="bg-blue-600 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -203,7 +163,7 @@ export default function LandingPage({ onGetStarted }) {
       </section>
 
       {/* Final CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      {/* <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="bg-slate-900 rounded-2xl p-12 text-center shadow-2xl">
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
             Ready to Organize Your Thoughts?
@@ -224,7 +184,7 @@ export default function LandingPage({ onGetStarted }) {
             No credit card required • Start in seconds • Free forever
           </p>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-300 py-16">
