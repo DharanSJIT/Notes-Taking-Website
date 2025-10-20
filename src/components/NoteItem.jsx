@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Pin, Trash2, MoreVertical } from 'lucide-react';
 import ConfirmDialog from './ConfirmDialog';
 
-const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin }) => {
+const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin, animationDelay = 0 }) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -20,11 +20,12 @@ const NoteItem = ({ note, isSelected, onSelect, onDelete, onTogglePin }) => {
 
   return (
     <div
-      className={`p-3 rounded-lg cursor-pointer transition-colors group ${
+      className={`p-3 rounded-lg cursor-pointer transition-all duration-300 group hover:scale-[1.02] hover:shadow-md animate-slideInFromLeft ${
         isSelected 
           ? 'bg-blue-50 border border-blue-200' 
           : 'bg-white border border-gray-200 hover:bg-gray-50'
       }`}
+      style={{ animationDelay: `${animationDelay}ms` }}
       onClick={onSelect}
     >
       <div className="flex items-start justify-between">

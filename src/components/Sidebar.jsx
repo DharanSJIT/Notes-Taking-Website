@@ -6,12 +6,12 @@ const Sidebar = ({ notes, selectedNoteId, onSelectNote, onDeleteNote, onTogglePi
   const unpinnedNotes = notes.filter(note => !note.isPinned);
 
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto animate-fadeIn">
       {pinnedNotes.length > 0 && (
         <div className="p-4">
           <h3 className="text-sm font-medium text-gray-500 mb-3">Pinned</h3>
           <div className="space-y-2">
-            {pinnedNotes.map(note => (
+            {pinnedNotes.map((note, index) => (
               <NoteItem
                 key={note.id}
                 note={note}
@@ -19,6 +19,7 @@ const Sidebar = ({ notes, selectedNoteId, onSelectNote, onDeleteNote, onTogglePi
                 onSelect={() => onSelectNote(note.id)}
                 onDelete={() => onDeleteNote(note.id)}
                 onTogglePin={() => onTogglePin(note.id)}
+                animationDelay={index * 50}
               />
             ))}
           </div>
@@ -31,7 +32,7 @@ const Sidebar = ({ notes, selectedNoteId, onSelectNote, onDeleteNote, onTogglePi
             <h3 className="text-sm font-medium text-gray-500 mb-3">Notes</h3>
           )}
           <div className="space-y-2">
-            {unpinnedNotes.map(note => (
+            {unpinnedNotes.map((note, index) => (
               <NoteItem
                 key={note.id}
                 note={note}
@@ -39,6 +40,7 @@ const Sidebar = ({ notes, selectedNoteId, onSelectNote, onDeleteNote, onTogglePi
                 onSelect={() => onSelectNote(note.id)}
                 onDelete={() => onDeleteNote(note.id)}
                 onTogglePin={() => onTogglePin(note.id)}
+                animationDelay={index * 50}
               />
             ))}
           </div>

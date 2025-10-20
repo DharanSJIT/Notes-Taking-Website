@@ -4,7 +4,7 @@ import SettingsMenu from './SettingsMenu';
 
 const Header = ({ onCreateNote, notes, onImportNotes, onClearAllNotes, onLogout, userEmail }) => {
   return (
-    <header className="bg-white border-b border-gray-200 px-4 py-3 sm:py-4">
+    <header className="bg-white border-b border-gray-200 px-4 py-3 sm:py-4 animate-slideDown">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2 sm:space-x-3">
           <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600" />
@@ -17,7 +17,7 @@ const Header = ({ onCreateNote, notes, onImportNotes, onClearAllNotes, onLogout,
           )}
           <button
             onClick={onCreateNote}
-            className="flex items-center space-x-2 bg-blue-600 text-white px-3 sm:px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center space-x-2 bg-blue-600 text-white px-3 sm:px-4 py-2.5 rounded-lg hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
           >
             <Plus className="w-5 h-5" />
             <span className="hidden sm:inline">New Note</span>

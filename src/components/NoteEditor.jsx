@@ -93,7 +93,7 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-white">
+    <div className="flex-1 flex flex-col bg-white animate-fadeIn">
       <div className="border-b border-gray-200 p-3 sm:p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3 flex-1">
@@ -116,16 +116,16 @@ const NoteEditor = ({ note, onUpdateNote, onToggleSidebar, isMobile }) => {
           <div className="flex items-center space-x-2">
             <button
               onClick={() => exportToText(note)}
-              className="flex items-center space-x-2 p-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+              className="flex items-center space-x-2 p-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all duration-200 hover:scale-105"
             >
               <Download className="w-5 h-5" />
             </button>
             <button
               onClick={handleSave}
               disabled={!isModified}
-              className={`flex items-center space-x-2 px-3 md:px-4 py-2.5 rounded-lg transition-colors ${
+              className={`flex items-center space-x-2 px-3 md:px-4 py-2.5 rounded-lg transition-all duration-300 ${
                 isModified
-                  ? 'bg-blue-600 text-white hover:bg-blue-700'
+                  ? 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 hover:shadow-lg'
                   : 'bg-gray-100 text-gray-400 cursor-not-allowed'
               }`}
             >
