@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Settings, Download, Upload, Trash2, MoreVertical } from 'lucide-react';
+import { Settings, Download, Upload, Trash2, MoreVertical, LogOut } from 'lucide-react';
 import { exportToJSON, importFromJSON } from '../utils/exportUtils';
 
-const SettingsMenu = ({ notes, onImportNotes, onClearAllNotes }) => {
+const SettingsMenu = ({ notes, onImportNotes, onClearAllNotes, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -76,6 +76,19 @@ const SettingsMenu = ({ notes, onImportNotes, onClearAllNotes }) => {
               <Trash2 className="w-4 h-4" />
               <span>Clear All Notes</span>
             </button>
+            
+            {onLogout && (
+              <>
+                <hr className="my-2 border-gray-200" />
+                <button
+                  onClick={() => { onLogout(); setIsOpen(false); }}
+                  className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-3"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Logout</span>
+                </button>
+              </>
+            )}
           </div>
         </>
       )}

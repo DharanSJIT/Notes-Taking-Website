@@ -5,10 +5,17 @@ import NoteEditor from './components/NoteEditor';
 import SearchBar from './components/SearchBar';
 import EmptyState from './components/EmptyState';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
-import { useSupabaseNotes } from './hooks/useSupabaseNotes';
+import Login from './components/Login';
+import LandingPage from './components/LandingPage';
+import { useFirebaseNotes } from './hooks/useFirebaseNotes';
+import { auth } from './firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 function App() {
-  const { notes, loading, createNote: createNoteDB, updateNote: updateNoteDB, deleteNote: deleteNoteDB } = useSupabaseNotes();
+  const [user, setUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [showLanding, setShowLanding] = useState(true);
+  const { notes, loading, createNote: createNoteDB, updateNote: updateNoteDB, deleteNote: deleteNoteDB } = useFirebaseNotes();
   const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -95,6 +102,17 @@ function App() {
   };
 
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setAuthLoading(false);
+      if (currentUser) {
+        setShowLanding(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
     if (notes.length > 0 && !selectedNoteId) {
       setSelectedNoteId(notes[0].id);
     }
@@ -116,6 +134,29 @@ function App() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [notes]);
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
+  if (authLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-white">
+        <div className="text-gray-500">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    if (showLanding) {
+      return <LandingPage onGetStarted={() => setShowLanding(false)} />;
+    }
+    return <Login onSuccess={() => {}} />;
+  }
+
   return (
     <div className="h-screen bg-white flex flex-col">
       <Header 
@@ -123,6 +164,8 @@ function App() {
         notes={notes}
         onImportNotes={importNotes}
         onClearAllNotes={clearAllNotes}
+        onLogout={handleLogout}
+        userEmail={user?.email}
       />
       
       <div className="flex flex-1 overflow-hidden">
