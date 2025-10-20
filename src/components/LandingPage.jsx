@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, Lock, Cloud, Zap, Search, Tag, ArrowRight, CheckCircle } from 'lucide-react';
+import { FileText, Lock, Cloud, Zap, Search, Tag, ArrowRight, CheckCircle, Users, Star, TrendingUp, Heart, Play } from 'lucide-react';
 
 export default function LandingPage({ onGetStarted }) {
   return (
@@ -8,84 +8,69 @@ export default function LandingPage({ onGetStarted }) {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-indigo-600 rounded-lg">
+            <div className="flex items-center space-x-3 group cursor-pointer">
+              <div className="p-2 bg-blue-600 rounded-lg transition-all duration-300 group-hover:scale-105">
                 <FileText className="w-6 h-6 text-white" />
               </div>
               <span className="text-2xl font-bold text-slate-900">NotesApp</span>
             </div>
             <button
               onClick={onGetStarted}
-              className="flex items-center gap-2 bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+              className="group flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 hover:shadow-lg"
             >
-              Get Started
-              <ArrowRight className="w-4 h-4" />
+              Start Your Journey
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20">
         <div className="text-center">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 mb-6 tracking-tight">
-            Your Ideas,
-            <span className="text-indigo-600"> Organized</span>
+          {/* <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-8 border border-blue-200">
+            <TrendingUp className="w-4 h-4" />
+            Trusted by 10,000+ thoughtful creators
+          </div> */}
+          
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-8 leading-tight">
+            Where Your
+            <span className="block text-blue-600">
+              Best Ideas Live
+            </span>
           </h1>
-          <p className="text-xl sm:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-            A beautiful, fast, and secure note-taking app that helps you capture and organize your thoughts effortlessly.
+          
+          <p className="text-xl sm:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-[200px] font-light">
+            Capture your thoughts, organize your life, and unleash your creativity. 
+            The simplest way to remember what matters, beautifully designed for humans.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button
-              onClick={onGetStarted}
-              className="flex items-center gap-2 bg-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-indigo-700 transition-all duration-200 transform hover:scale-105 shadow-xl"
-            >
-              Start Taking Notes
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            <button className="flex items-center gap-2 bg-white text-slate-700 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-slate-50 transition-all duration-200 border-2 border-slate-200">
-              Learn More
-            </button>
-          </div>
+         
         </div>
 
-        {/* Hero Image/Illustration */}
-        <div className="mt-16 relative">
-          <div className="bg-slate-50 rounded-3xl shadow-xl p-8 border border-slate-200">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-3 h-3 bg-indigo-500 rounded-full"></div>
-                  <span className="text-sm font-semibold text-slate-700">Meeting Notes</span>
+        {/* Hero Illustration */}
+        <div className="mt-20">
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-200 hover:shadow-2xl transition-shadow duration-500">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { color: 'blue', title: 'Meeting Notes', emoji: '📝', bg: 'bg-blue-50', border: 'border-blue-200', dot: 'bg-blue-500', bar: 'bg-blue-200' },
+                { color: 'blue', title: 'Creative Ideas', emoji: '💡', bg: 'bg-blue-50', border: 'border-blue-200', dot: 'bg-blue-500', bar: 'bg-blue-200' },
+                { color: 'blue', title: 'To-Do List', emoji: '✅', bg: 'bg-blue-50', border: 'border-blue-200', dot: 'bg-blue-500', bar: 'bg-blue-200' }
+              ].map((item, index) => (
+                <div 
+                  key={index}
+                  className={`${item.bg} p-6 rounded-xl border ${item.border} hover:transform hover:scale-105 transition-all duration-300 cursor-pointer`}
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-2xl">{item.emoji}</span>
+                    <span className="text-sm font-semibold text-slate-700">{item.title}</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className={`h-2 ${item.bar} rounded-full w-full`}></div>
+                    <div className={`h-2 ${item.bar} rounded-full w-4/5`}></div>
+                    <div className={`h-2 ${item.bar} rounded-full w-3/5`}></div>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="h-2 bg-indigo-200 rounded w-full"></div>
-                  <div className="h-2 bg-indigo-200 rounded w-4/5"></div>
-                  <div className="h-2 bg-indigo-200 rounded w-3/5"></div>
-                </div>
-              </div>
-              <div className="bg-purple-50 p-6 rounded-2xl border border-purple-200">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                  <span className="text-sm font-semibold text-slate-700">Project Ideas</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="h-2 bg-purple-200 rounded w-full"></div>
-                  <div className="h-2 bg-purple-200 rounded w-5/6"></div>
-                  <div className="h-2 bg-purple-200 rounded w-2/3"></div>
-                </div>
-              </div>
-              <div className="bg-green-50 p-6 rounded-2xl border border-green-200">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-sm font-semibold text-slate-700">To-Do List</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="h-2 bg-green-200 rounded w-full"></div>
-                  <div className="h-2 bg-green-200 rounded w-3/4"></div>
-                  <div className="h-2 bg-green-200 rounded w-4/5"></div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -94,134 +79,121 @@ export default function LandingPage({ onGetStarted }) {
       {/* Features Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
-            Everything You Need
+          <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">
+            Designed for Your Mind
           </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Powerful features to help you stay organized and productive
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Everything you need to capture, organize, and find your thoughts—without the complexity.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Feature 1 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 hover:shadow-xl transition-shadow duration-300">
-            <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
-              <Cloud className="w-6 h-6 text-indigo-600" />
+          {[
+            { icon: Cloud, title: 'Seamless Sync', description: 'Your notes travel with you. Pick up where you left off on any device, automatically.' },
+            { icon: Lock, title: 'Private & Secure', description: 'Your thoughts are yours alone. End-to-end encryption keeps them private.' },
+            { icon: Zap, title: 'Lightning Fast', description: 'Open and search notes instantly. No waiting, just pure productivity.' },
+            { icon: Search, title: 'Smart Search', description: 'Find anything in seconds, even if you barely remember what you wrote.' },
+            { icon: Tag, title: 'Intuitive Organization', description: 'Tags and categories that work the way your brain thinks.' },
+            { icon: FileText, title: 'Beautiful Editing', description: 'A distraction-free writing experience that feels just right.' }
+          ].map((feature, index) => (
+            <div 
+              key={index}
+              className="group bg-white p-8 rounded-xl shadow-lg border border-slate-200 hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1 cursor-pointer"
+            >
+              <div className="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                <feature.icon className="w-7 h-7 text-blue-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">{feature.title}</h3>
+              <p className="text-slate-600 leading-relaxed">{feature.description}</p>
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Cloud Sync</h3>
-            <p className="text-slate-600">
-              Your notes are automatically synced across all your devices in real-time with Firebase.
-            </p>
-          </div>
-
-          {/* Feature 2 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 hover:shadow-xl transition-shadow duration-300">
-            <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-              <Lock className="w-6 h-6 text-purple-600" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Secure & Private</h3>
-            <p className="text-slate-600">
-              Your data is encrypted and protected. Only you have access to your notes.
-            </p>
-          </div>
-
-          {/* Feature 3 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 hover:shadow-xl transition-shadow duration-300">
-            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-              <Zap className="w-6 h-6 text-green-600" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Lightning Fast</h3>
-            <p className="text-slate-600">
-              Built with modern technology for instant loading and smooth performance.
-            </p>
-          </div>
-
-          {/* Feature 4 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 hover:shadow-xl transition-shadow duration-300">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-              <Search className="w-6 h-6 text-blue-600" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Powerful Search</h3>
-            <p className="text-slate-600">
-              Find any note instantly with our fast and intelligent search feature.
-            </p>
-          </div>
-
-          {/* Feature 5 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 hover:shadow-xl transition-shadow duration-300">
-            <div className="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center mb-4">
-              <Tag className="w-6 h-6 text-pink-600" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Tags & Categories</h3>
-            <p className="text-slate-600">
-              Organize your notes with custom tags and categories for easy access.
-            </p>
-          </div>
-
-          {/* Feature 6 */}
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 hover:shadow-xl transition-shadow duration-300">
-            <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
-              <FileText className="w-6 h-6 text-orange-600" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-3">Rich Text Editor</h3>
-            <p className="text-slate-600">
-              Format your notes beautifully with our intuitive and powerful editor.
-            </p>
-          </div>
+          ))}
         </div>
       </section>
 
+      {/* Social Proof Section */}
+      {/* <section className="bg-slate-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">
+              Loved by Creative Minds
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Join thousands of writers, thinkers, and creators who trust NotesApp
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { name: "Sarah Chen", role: "Product Designer", quote: "NotesApp transformed how I capture inspiration. It feels like it was made just for me." },
+              { name: "Marcus Johnson", role: "Startup Founder", quote: "Finally, a note-taking app that gets out of my way and lets me focus on ideas." },
+              { name: "Elena Rodriguez", role: "Writer", quote: "The perfect balance of simplicity and power. My thoughts have never been more organized." }
+            ].map((testimonial, index) => (
+              <div key={index} className="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                <div className="flex items-center gap-2 mb-4">
+                  {[1,2,3,4,5].map(star => (
+                    <Star key={star} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-slate-600 italic mb-6 leading-relaxed">"{testimonial.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                    {testimonial.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-900">{testimonial.name}</div>
+                    <div className="text-sm text-slate-500">{testimonial.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section> */}
+
       {/* Benefits Section */}
-      <section className="bg-indigo-600 py-20">
+      <section className="bg-blue-600 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-                Why Choose NotesApp?
+                Your Second Brain, Perfected
               </h2>
-              <p className="text-xl text-indigo-100 mb-8">
-                Join thousands of users who trust NotesApp to keep their ideas organized and accessible.
+              <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+                We built NotesApp to work the way your mind works—naturally, intuitively, and beautifully.
               </p>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-6 h-6 text-green-300 flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="text-lg font-semibold text-white mb-1">Free to Use</h4>
-                    <p className="text-indigo-100">Start taking notes immediately, no credit card required.</p>
+              <div className="space-y-6">
+                {[
+                  { title: "Free Forever", description: "Start capturing ideas immediately. No hidden costs, no surprises." },
+                  { title: "Works Everywhere", description: "From your phone to your laptop, your notes are always with you." },
+                  { title: "Human-Centered Design", description: "Every feature is designed with real people in mind." }
+                ].map((benefit, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <CheckCircle className="w-6 h-6 text-green-300 flex-shrink-0 mt-1" />
+                    <div>
+                      <h4 className="text-lg font-semibold text-white mb-1">{benefit.title}</h4>
+                      <p className="text-blue-100">{benefit.description}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-6 h-6 text-green-300 flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="text-lg font-semibold text-white mb-1">Cross-Platform</h4>
-                    <p className="text-indigo-100">Access your notes from any device, anywhere, anytime.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-6 h-6 text-green-300 flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="text-lg font-semibold text-white mb-1">Easy to Use</h4>
-                    <p className="text-indigo-100">Clean, intuitive interface that gets out of your way.</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-            <div className="bg-indigo-700 rounded-3xl p-8 border border-indigo-500">
+            <div className="bg-blue-700 rounded-2xl p-8 border border-blue-500">
               <div className="text-center">
-                <div className="text-6xl font-bold text-white mb-2">10,000+</div>
-                <div className="text-xl text-indigo-100 mb-8">Active Users</div>
-                <div className="grid grid-cols-3 gap-4 text-center">
+                <Users className="w-12 h-12 text-white mx-auto mb-4" />
+                <div className="text-4xl font-bold text-white mb-2">10,000+</div>
+                <div className="text-xl text-blue-100 mb-8">Happy Creators</div>
+                <div className="grid grid-cols-3 gap-6 text-center">
                   <div>
-                    <div className="text-3xl font-bold text-white">50K+</div>
-                    <div className="text-sm text-indigo-100">Notes Created</div>
+                    <div className="text-2xl font-bold text-white">50K+</div>
+                    <div className="text-sm text-blue-100">Ideas Captured</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-white">99.9%</div>
-                    <div className="text-sm text-indigo-100">Uptime</div>
+                    <div className="text-2xl font-bold text-white">99.9%</div>
+                    <div className="text-sm text-blue-100">Always Available</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-white">4.9★</div>
-                    <div className="text-sm text-indigo-100">User Rating</div>
+                    <div className="text-2xl font-bold text-white">4.9★</div>
+                    <div className="text-sm text-blue-100">Love Rating</div>
                   </div>
                 </div>
               </div>
@@ -230,67 +202,72 @@ export default function LandingPage({ onGetStarted }) {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Final CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="bg-indigo-600 rounded-3xl p-12 text-center shadow-xl">
+        <div className="bg-slate-900 rounded-2xl p-12 text-center shadow-2xl">
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-            Ready to Get Started?
+            Ready to Organize Your Thoughts?
           </h2>
-          <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
-            Join NotesApp today and experience the best way to organize your thoughts and ideas.
+          <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+            Join thousands of creators who've found their perfect note-taking home. 
+            Your best ideas deserve a beautiful space.
           </p>
           <button
             onClick={onGetStarted}
-            className="inline-flex items-center gap-2 bg-white text-indigo-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-slate-50 transition-all duration-200 transform hover:scale-105 shadow-xl"
+            className="group inline-flex items-center gap-3 bg-white text-slate-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-slate-50 transition-all duration-300 hover:shadow-lg"
           >
-            Get Started for Free
-            <ArrowRight className="w-5 h-5" />
+            <FileText className="w-5 h-5" />
+            Create Your First Note
+            <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
+          <p className="text-slate-400 text-sm mt-4">
+            No credit card required • Start in seconds • Free forever
+          </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-12">
+      <footer className="bg-slate-900 text-slate-300 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                <div className="p-2 bg-indigo-600 rounded-lg">
+                <div className="p-2 bg-blue-600 rounded-lg">
                   <FileText className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-xl font-bold text-white">NotesApp</span>
               </div>
-              <p className="text-sm text-slate-400">
-                The best way to organize your thoughts and ideas.
+              <p className="text-sm text-slate-400 leading-relaxed">
+                Helping thoughtful people capture and organize their best ideas since 2024.
               </p>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+              <ul className="space-y-3 text-sm">
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Features</a></li>
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Pricing</a></li>
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Security</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <h4 className="text-white font-semibold mb-4">Community</h4>
+              <ul className="space-y-3 text-sm">
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Stories</a></li>
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Blog</a></li>
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Forum</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Cookie Policy</a></li>
+              <h4 className="text-white font-semibold mb-4">Support</h4>
+              <ul className="space-y-3 text-sm">
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Help Center</a></li>
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Contact</a></li>
+                <li><a href="#" className="hover:text-white transition-colors duration-200">Privacy</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-slate-800 mt-8 pt-8 text-center text-sm text-slate-400">
-            <p>&copy; 2024 NotesApp. All rights reserved.</p>
+          <div className="border-t border-slate-800 mt-12 pt-8 text-center text-sm text-slate-400">
+            <p>Made with ❤️ for creators everywhere. © 2024 NotesApp. All rights reserved.</p>
           </div>
         </div>
       </footer>
