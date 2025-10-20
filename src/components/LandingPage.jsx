@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FileText, Lock, Cloud, Zap, Search, Tag, ArrowRight, CheckCircle, Users, Star, TrendingUp, Heart, Play } from 'lucide-react';
 
 export default function LandingPage({ onGetStarted }) {
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleGetStarted = () => {
+    setIsTransitioning(true);
+    setTimeout(() => onGetStarted(), 500);
+  };
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className={`min-h-screen bg-white transition-all duration-500 ${
+      isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+    }`}>
       {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -15,8 +24,9 @@ export default function LandingPage({ onGetStarted }) {
               <span className="text-2xl font-bold text-slate-900">NotesApp</span>
             </div>
             <button
-              onClick={onGetStarted}
-              className="group flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 hover:shadow-lg"
+              onClick={handleGetStarted}
+              className="group flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 hover:shadow-lg hover:scale-105"
+              disabled={isTransitioning}
             >
               Start Your Journey
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

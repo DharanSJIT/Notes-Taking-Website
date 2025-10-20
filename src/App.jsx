@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import NoteEditor from './components/NoteEditor';
@@ -12,9 +13,12 @@ import { auth } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const [showLanding, setShowLanding] = useState(true);
+  const [pageTransition, setPageTransition] = useState(false);
   const { notes, loading, createNote: createNoteDB, updateNote: updateNoteDB, deleteNote: deleteNoteDB } = useFirebaseNotes();
   const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -107,10 +111,15 @@ function App() {
       setAuthLoading(false);
       if (currentUser) {
         setShowLanding(false);
+        setPageTransition(true);
+        setTimeout(() => {
+          navigate('/notes');
+          setTimeout(() => setPageTransition(false), 300);
+        }, 500);
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (notes.length > 0 && !selectedNoteId) {
@@ -136,29 +145,31 @@ function App() {
 
   const handleLogout = async () => {
     try {
+      setPageTransition(true);
       await signOut(auth);
+      setTimeout(() => {
+        navigate('/');
+        setShowLanding(true);
+        setTimeout(() => setPageTransition(false), 300);
+      }, 300);
     } catch (error) {
       console.error('Error signing out:', error);
+      setPageTransition(false);
     }
   };
 
   if (authLoading) {
     return (
       <div className="h-screen flex items-center justify-center bg-white">
-        <div className="text-gray-500">Loading...</div>
+        <div className="animate-pulse text-gray-500">Loading...</div>
       </div>
     );
   }
 
-  if (!user) {
-    if (showLanding) {
-      return <LandingPage onGetStarted={() => setShowLanding(false)} />;
-    }
-    return <Login onSuccess={() => {}} />;
-  }
-
-  return (
-    <div className="h-screen bg-white flex flex-col">
+  const NotesPage = () => (
+    <div className={`h-screen bg-white flex flex-col transition-opacity duration-500 ${
+      pageTransition ? 'opacity-0' : 'opacity-100'
+    }`}>
       <Header 
         onCreateNote={createNote}
         notes={notes}
@@ -224,6 +235,33 @@ function App() {
       
       <KeyboardShortcuts />
     </div>
+  );
+
+  return (
+    <>
+      {pageTransition && (
+        <div className="fixed inset-0 bg-white z-50 flex items-center justify-center animate-fadeIn">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600 animate-pulse">Loading your notes...</p>
+          </div>
+        </div>
+      )}
+      <Routes>
+        <Route path="/" element={
+          user ? <Navigate to="/notes" replace /> : 
+          showLanding ? <LandingPage onGetStarted={() => setShowLanding(false)} /> : 
+          <Navigate to="/login" replace />
+        } />
+        <Route path="/login" element={
+          user ? <Navigate to="/notes" replace /> : <Login onSuccess={() => {}} />
+        } />
+        <Route path="/notes" element={
+          user ? <NotesPage /> : <Navigate to="/login" replace />
+        } />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }
 

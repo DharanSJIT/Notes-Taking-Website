@@ -11,6 +11,12 @@ export default function Signup({ onSuccess, onSwitchToLogin }) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleSwitchToLogin = () => {
+    setIsAnimating(true);
+    setTimeout(() => onSwitchToLogin(), 300);
+  };
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -60,10 +66,12 @@ export default function Signup({ onSuccess, onSwitchToLogin }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-72 h-72 bg-indigo-100 rounded-full opacity-50 -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-100 rounded-full opacity-50 translate-x-1/2 translate-y-1/2"></div>
+      <div className="absolute top-0 left-0 w-72 h-72 bg-indigo-100 rounded-full opacity-50 -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+      <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-100 rounded-full opacity-50 translate-x-1/2 translate-y-1/2 animate-pulse" style={{animationDelay: '1s'}}></div>
 
-      <div className="w-full max-w-md p-8 bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-slate-200 z-10">
+      <div className={`w-full max-w-md p-8 bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-slate-200 z-10 transition-all duration-500 ${
+        isAnimating ? 'opacity-0 scale-95 translate-x-8' : 'opacity-100 scale-100 translate-x-0'
+      } animate-slideInFromRight`}>
         <h2 className="text-3xl font-extrabold text-center text-slate-900 mb-2 tracking-tight">
           Create an Account
         </h2>
@@ -138,7 +146,7 @@ export default function Signup({ onSuccess, onSwitchToLogin }) {
 
         <p className="mt-8 text-center text-sm text-slate-600">
           Already have an account?{" "}
-          <button onClick={onSwitchToLogin} className="text-indigo-600 font-semibold hover:text-indigo-700 hover:underline transition-colors duration-200">
+          <button onClick={handleSwitchToLogin} className="text-indigo-600 font-semibold hover:text-indigo-700 hover:underline transition-colors duration-200" disabled={isAnimating}>
             Log In
           </button>
         </p>

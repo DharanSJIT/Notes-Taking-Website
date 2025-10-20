@@ -11,9 +11,21 @@ export default function Login({ onSuccess }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleSwitchToSignup = () => {
+    setIsAnimating(true);
+    setTimeout(() => setIsSignup(true), 300);
+  };
 
   if (isSignup) {
-    return <Signup onSuccess={onSuccess} onSwitchToLogin={() => setIsSignup(false)} />;
+    return <Signup onSuccess={onSuccess} onSwitchToLogin={() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIsSignup(false);
+        setIsAnimating(false);
+      }, 300);
+    }} />;
   }
 
   const handleLogin = async (e) => {
@@ -64,10 +76,12 @@ export default function Login({ onSuccess }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-72 h-72 bg-indigo-100 rounded-full opacity-50 -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-100 rounded-full opacity-50 translate-x-1/2 translate-y-1/2"></div>
+      <div className="absolute top-0 left-0 w-72 h-72 bg-indigo-100 rounded-full opacity-50 -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+      <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-100 rounded-full opacity-50 translate-x-1/2 translate-y-1/2 animate-pulse" style={{animationDelay: '1s'}}></div>
       
-      <div className="w-full max-w-md p-8 bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-slate-200 z-10">
+      <div className={`w-full max-w-md p-8 bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-slate-200 z-10 transition-all duration-500 ${
+        isAnimating ? 'opacity-0 scale-95 -translate-x-8' : 'opacity-100 scale-100 translate-x-0'
+      } animate-slideInFromLeft`}>
         <div className="flex justify-center mb-6">
           <div className="p-3 bg-indigo-100 rounded-full">
             <Lock className="w-8 h-8 text-indigo-600" />
@@ -151,8 +165,9 @@ export default function Login({ onSuccess }) {
         <p className="mt-8 text-center text-sm text-slate-600">
           Don't have an account?{" "}
           <button
-            onClick={() => setIsSignup(true)}
+            onClick={handleSwitchToSignup}
             className="text-indigo-600 font-semibold hover:text-indigo-700 hover:underline transition-colors duration-200"
+            disabled={isAnimating}
           >
             Sign Up
           </button>
